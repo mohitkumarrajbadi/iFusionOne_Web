@@ -1,0 +1,123 @@
+.react-flow {
+    direction: ltr;
+    background-color: var(--xy-background-color, transparent);
+  
+    /* Edge styles */
+    --xy-edge-stroke-default: var(--text);
+    --xy-edge-stroke-width-default: 3;
+    --xy-edge-stroke-selected-default: #555;
+  
+    /* Connection line styles */
+    --xy-connectionline-stroke-default: #b1b1b7;
+    --xy-connectionline-stroke-width-default: 1;
+  
+    /* Attribution */
+    --xy-attribution-background-color-default: rgba(255, 255, 255, 0.5);
+  
+    /* Minimap */
+    --xy-minimap-background-color-default: #fff;
+    --xy-minimap-mask-background-color-default: rgba(240, 240, 240, 0.6);
+    --xy-minimap-mask-stroke-color-default: transparent;
+    --xy-minimap-mask-stroke-width-default: 1;
+    --xy-minimap-node-background-color-default: #e2e2e2;
+    --xy-minimap-node-stroke-color-default: transparent;
+    --xy-minimap-node-stroke-width-default: 2;
+  
+    /* Background patterns */
+    --xy-background-color-default: transparent;
+    --xy-background-pattern-dots-color-default: #91919a;
+    --xy-background-pattern-lines-color-default: #eee;
+    --xy-background-pattern-cross-color-default: #e2e2e2;
+  
+    /* Node styles */
+    --xy-node-color-default: inherit;
+    --xy-node-border-default: 1px solid #1a192b;
+    --xy-node-background-color-default: #fff;
+    --xy-node-group-background-color-default: rgba(240, 240, 240, 0.25);
+    --xy-node-boxshadow-hover-default: 0 1px 4px 1px rgba(0, 0, 0, 0.08);
+    --xy-node-boxshadow-selected-default: 0 0 0 0.5px #1a192b;
+    --xy-node-border-radius-default: 3px;
+  
+    /* Handle */
+    --xy-handle-background-color-default: #1a192b;
+    --xy-handle-border-color-default: #fff;
+  
+    /* Selection */
+    --xy-selection-background-color-default: rgba(0, 89, 220, 0.08);
+    --xy-selection-border-default: 1px dotted rgba(0, 89, 220, 0.8);
+  
+    /* Controls */
+    --xy-controls-button-background-color-default: #fefefe;
+    --xy-controls-button-background-color-hover-default: #f4f4f4;
+    --xy-controls-button-color-default: inherit;
+    --xy-controls-button-color-hover-default: inherit;
+    --xy-controls-button-border-color-default: #eee;
+    --xy-controls-box-shadow-default: 0 0 2px 1px rgba(0, 0, 0, 0.08);
+  
+    /* Edge label */
+    --xy-edge-label-background-color-default: #ffffff;
+    --xy-edge-label-color-default: inherit;
+  
+    /* Resize */
+    --xy-resize-background-color-default: #3367d9;
+  }
+  
+  /* Node Styling */
+  .react-flow__node {
+    width: fit-content;
+    max-width: 250px;
+    background-color: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px;
+    font-family: var(--font-family);
+    font-size: 14px;
+    box-shadow: var(--shadow);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .react-flow__node:hover {
+    transform: scale(1.05);
+    background-color: var(--surface-alt);
+  }
+  
+  /* Label Styling */
+  .react-flow__node .node-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  /* Tooltip Styling */
+  .node-label-with-tooltip {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .tooltip {
+    visibility: hidden;
+    background-color: black;
+    color: #fff;
+    font-size: 10px;
+    text-align: center;
+    border-radius: 4px;
+    padding: 4px 6px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  
+  .node-label-with-tooltip:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+  

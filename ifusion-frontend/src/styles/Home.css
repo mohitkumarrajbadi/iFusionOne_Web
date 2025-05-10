@@ -1,0 +1,146 @@
+.home-container {
+  min-height: 100vh;
+  padding: 3rem 2rem;
+  background-color: var(--bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.launch-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.astro-image {
+  width: 170px;
+  margin-bottom: 2rem;
+  transition: transform 0.5s ease;
+  z-index: 10;
+  position: relative;
+}
+
+.astro-image.launching {
+  animation: liftOff 2s ease forwards;
+}
+
+@keyframes liftOff {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-150vh); opacity: 0; }
+}
+
+.countdown-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4rem;
+  font-weight: bold;
+  color: var(--accent);
+  z-index: 20;
+  animation: popIn 0.3s ease-in;
+}
+
+@keyframes popIn {
+  0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+/* Rocket Effects */
+.launch-fire {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 120px;
+  background: linear-gradient(to bottom, #ff6a00, #ff3300, transparent);
+  border-radius: 50%;
+  opacity: 0.9;
+  animation: firePulse 0.4s infinite;
+  z-index: 1;
+}
+
+@keyframes firePulse {
+  0%, 100% { transform: translateX(-50%) scaleY(1); opacity: 0.8; }
+  50% { transform: translateX(-50%) scaleY(1.4); opacity: 0.5; }
+}
+
+.launch-smoke {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, #ccc 0%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: smokeDrift 2s infinite;
+  z-index: 0;
+}
+
+.smoke2 {
+  width: 70px;
+  animation-delay: 0.4s;
+}
+
+.smoke3 {
+  width: 80px;
+  animation-delay: 0.8s;
+}
+
+@keyframes smokeDrift {
+  0% { transform: translateX(-50%) translateY(0) scale(1); opacity: 0.5; }
+  100% { transform: translateX(-50%) translateY(-40px) scale(1.5); opacity: 0; }
+}
+
+.home-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-top: 1rem;
+}
+
+.ifusionone-text {
+  color: var(--accent);
+}
+
+.home-subtitle {
+  font-size: 1.25rem;
+  color: var(--secondary);
+  max-width: 700px;
+  margin-top: 1rem;
+  line-height: 1.5;
+}
+
+.home-note {
+  margin-top: 2.5rem;
+  font-size: 1rem;
+  color: var(--secondary);
+  max-width: 700px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.github-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  background-color: var(--accent);
+  color: #fff;
+  padding: 0.7rem 1.4rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.github-button:hover {
+  background-color: var(--accent-hover);
+}

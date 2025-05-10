@@ -1,0 +1,206 @@
+.side-navbar {
+  background-color: var(--surface);
+  border-right: 1px solid var(--border);
+  width: 22vw;
+  max-width: 100%;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  padding: 0px 10px;
+  height: 100vh;
+  position: relative;
+  z-index: 10;
+  backdrop-filter: blur(8px);
+  /* Slightly softened background blur */
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .side-navbar {
+    transform: translateX(-100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 240px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: var(--shadow-small);
+  }
+
+  .side-navbar.open {
+    transform: translateX(0);
+  }
+}
+
+.side-navbar-header {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 0rem;
+  margin-top: 0rem !important;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+}
+
+.sidebar-heading-logo {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0rem 1rem 0rem;
+}
+
+.ifusionone-logo {
+  height: 36px;
+  width: 36px;
+  border-radius: 8px;
+}
+
+.side-navbar-search {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  background-color: var(--button-bg);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  margin-bottom: 1.5rem;
+  transition: background 0.3s ease;
+}
+
+.side-navbar-search input {
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 1rem;
+  flex: 1;
+  outline: none;
+}
+
+.sidebar-section {
+  margin-bottom: 1.5rem;
+}
+
+.sidebar-section-title {
+  font-size: 0.8rem;
+  color: var(--secondary);
+  margin: 1rem 0 0.3rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+}
+
+.side-bar-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.55rem 0.75rem;
+  border-radius: 10px;
+  color: var(--text);
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.side-bar-link a {
+  flex: 1;
+  text-decoration: none;
+  color: inherit;
+}
+
+.side-bar-link:hover {
+  background-color: var(--button-hover);
+  transform: translateX(5px);
+  /* Slight hover animation */
+}
+
+.side-bar-link.active {
+  background-color: var(--accent);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.favorite-icon {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding-left: 0.4rem;
+  transition: transform 0.2s ease;
+}
+
+.favorite-icon:hover {
+  transform: scale(1.1);
+  /* Slight zoom effect on hover */
+}
+
+.sidebar-scrollable {
+  flex-grow: 1;
+  overflow: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding-right: 4px;
+}
+
+.sidebar-scrollable::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-scrollable::-webkit-scrollbar-thumb {
+  background-color: var(--accent);
+  border-radius: 8px;
+}
+
+.no-results {
+  color: var(--secondary);
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+
+.sidebar-footer {
+  padding-bottom: 5%;
+}
+
+
+.theme-toggle-btn {
+  background: var(--bg);
+  border: none;
+  color: var(--text);
+  /* font-size: 0.9rem; */
+  padding: 0;
+  /* border-radius: var(--radius); */
+  /* display: flex;
+  align-items: center;
+  gap: 0.5rem; */
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+  background: none;
+  transform: scale(1.5);
+  /* Button grows slightly on hover */
+}
+
+.sidebar-settings-link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  padding: 0.6rem;
+  border-radius: var(--radius);
+  color: var(--text);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.sidebar-settings-link:hover {
+  background-color: var(--button-hover);
+  transform: scale(1.05);
+}
+
+.settings-icon {
+  font-size: 1.2rem;
+}

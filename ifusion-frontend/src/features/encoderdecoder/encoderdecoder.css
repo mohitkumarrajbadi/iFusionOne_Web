@@ -1,0 +1,152 @@
+/* Main Container */
+.encoder-decoder-container {
+  background-color: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 2rem 1rem;
+  gap: 2rem;
+  height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-y: auto;
+
+}
+
+/* Title and Subtitle */
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+  color: var(--secondary);
+}
+
+/* Select Tool Dropdown */
+.encoder-decoder-select {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.label {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: var(--secondary);
+  display: block;
+}
+
+/* react-select styling */
+.encoder-decoder-select .react-select__control {
+  background-color: var(--button-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+}
+
+.encoder-decoder-select .react-select__menu {
+  background-color: var(--surface);
+  color: var(--text);
+}
+
+.encoder-decoder-select .react-select__option--is-focused {
+  background-color: var(--accent);
+  color: #fff;
+}
+
+/* Input and Output Layout */
+.input-output-area {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.input-area,
+.output-area {
+  flex: 1 1 45%;
+}
+
+textarea {
+  width: 100%;
+  min-height: 220px;
+  padding: 1rem;
+  background-color: var(--button-bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  font-family: var(--font-family);
+  resize: vertical;
+  transition: border-color 0.3s ease;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* QR Code Output */
+.qr-code {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: var(--radius);
+  min-height: 220px;
+}
+
+/* Button */
+.footer {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  background-color: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s ease-in-out;
+  box-shadow: var(--shadow);
+}
+
+button:hover {
+  background-color: #6d72f3;
+  transform: translateY(-2px);
+}
+
+button:active {
+  background-color: #5c60d6;
+  transform: translateY(1px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .input-output-area {
+    flex-direction: column;
+  }
+
+  .input-area,
+  .output-area {
+    flex: 1 1 100%;
+  }
+
+  textarea,
+  .qr-code {
+    min-height: 180px;
+  }
+}

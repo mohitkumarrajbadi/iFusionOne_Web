@@ -2,7 +2,7 @@
 
 **iFusionOne** is the ultimate open-source developer platform — a blazing-fast web-based workspace for formatters, converters, editors, playgrounds, diff tools, and more. Everything you need in one clean, unified interface.
 
-![iFusionOne Hero](public/fuso-superhero-logo.png)
+![iFusionOne Hero](ifusion-frontend/public/fuso-superhero-logo.png)
 
 ---
 

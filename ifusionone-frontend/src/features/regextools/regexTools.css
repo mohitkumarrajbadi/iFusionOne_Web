@@ -1,0 +1,138 @@
+.regex-tools-container {
+    background-color: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1rem 1rem;
+    height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    overflow-y: auto;
+}
+
+.regex-tools-container>.title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    text-align: center;
+}
+
+.regex-tools-container>.subtitle {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--secondary);
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.regex-tools-select {
+    margin-bottom: 2rem;
+    max-width: 250px;
+}
+
+.label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.input-output-area {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+.input-area,
+.output-area {
+    flex: 1 1 100%;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+@media (min-width: 900px) {
+
+    .input-area,
+    .output-area {
+        flex: 1 1 calc(33.33% - 1rem);
+    }
+}
+
+.regex-input {
+    margin-top: 0.5rem;
+    width: 100%;
+}
+
+.regex-tools-container textarea,
+.regex-tools-container input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: var(--radius);
+    border: 1px solid var(--editor-border);
+    background-color: var(--editor-bg);
+    font-family: var(--font-family);
+    color: var(--text);
+    padding: 0.75rem;
+    font-size: 1rem;
+    transition: border 0.2s ease;
+}
+
+.regex-tools-container textarea {
+    resize: vertical;
+    min-height: 160px;
+}
+
+.regex-tools-container input[type="text"] {
+    height: auto;
+    min-height: 42px;
+    white-space: nowrap;
+    overflow-x: auto;
+}
+
+.regex-tools-container textarea:focus,
+.regex-tools-container input[type="text"]:focus {
+    border-color: var(--accent-color);
+    outline: none;
+}
+
+textarea[readonly] {
+    background-color: var(--surface-alt);
+}
+
+.footer {
+    margin-top: 1rem;
+    text-align: right;
+}
+
+.highlighted {
+    background-color: var(--surface-alt);
+    border: 1px solid var(--editor-border);
+    padding: 1rem;
+    border-radius: var(--radius);
+    color: var(--text);
+    font-family: var(--font-family);
+    min-height: 15vh;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    width: 60vw;
+    box-sizing: border-box;
+}
+
+.react-select__control {
+    background-color: var(--editor-bg);
+    border-radius: var(--radius);
+    border: 1px solid var(--editor-border);
+    width: 100%;
+}
+
+.react-select__single-value {
+    color: var(--text);
+}

@@ -10,6 +10,11 @@
   text-align: center;
 }
 
+.tool-content {
+  overflow: auto;
+  height: 100vh;
+}
+
 .launch-wrapper {
   position: relative;
   display: inline-block;
@@ -17,6 +22,7 @@
 
 .astro-image {
   width: 170px;
+  max-width: 50vw;
   margin-bottom: 2rem;
   transition: transform 0.5s ease;
   z-index: 10;
@@ -28,8 +34,14 @@
 }
 
 @keyframes liftOff {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-150vh); opacity: 0; }
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-150vh);
+    opacity: 0;
+  }
 }
 
 .countdown-overlay {
@@ -45,8 +57,15 @@
 }
 
 @keyframes popIn {
-  0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
-  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
 }
 
 /* Rocket Effects */
@@ -65,8 +84,17 @@
 }
 
 @keyframes firePulse {
-  0%, 100% { transform: translateX(-50%) scaleY(1); opacity: 0.8; }
-  50% { transform: translateX(-50%) scaleY(1.4); opacity: 0.5; }
+
+  0%,
+  100% {
+    transform: translateX(-50%) scaleY(1);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: translateX(-50%) scaleY(1.4);
+    opacity: 0.5;
+  }
 }
 
 .launch-smoke {
@@ -94,8 +122,15 @@
 }
 
 @keyframes smokeDrift {
-  0% { transform: translateX(-50%) translateY(0) scale(1); opacity: 0.5; }
-  100% { transform: translateX(-50%) translateY(-40px) scale(1.5); opacity: 0; }
+  0% {
+    transform: translateX(-50%) translateY(0) scale(1);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: translateX(-50%) translateY(-40px) scale(1.5);
+    opacity: 0;
+  }
 }
 
 .home-title {
@@ -111,7 +146,7 @@
 .home-subtitle {
   font-size: 1.25rem;
   color: var(--secondary);
-  max-width: 700px;
+  max-width: 90%;
   margin-top: 1rem;
   line-height: 1.5;
 }
@@ -120,7 +155,7 @@
   margin-top: 2.5rem;
   font-size: 1rem;
   color: var(--secondary);
-  max-width: 700px;
+  max-width: 90%;
   text-align: center;
   line-height: 1.6;
 }
@@ -143,4 +178,43 @@
 
 .github-button:hover {
   background-color: var(--accent-hover);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .home-title {
+    font-size: 2rem;
+  }
+
+  .home-subtitle,
+  .home-note {
+    font-size: 1rem;
+  }
+
+  .countdown-overlay {
+    font-size: 3rem;
+  }
+
+  .astro-image {
+    width: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-title {
+    font-size: 1.6rem;
+  }
+
+  .countdown-overlay {
+    font-size: 2.5rem;
+  }
+
+  .astro-image {
+    width: 100px;
+  }
+
+  .github-button {
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+  }
 }

@@ -15,14 +15,14 @@ const allTools: Tool[] = [
   { path: '/validators', label: '✅ Validators' },
   { path: '/formatters', label: '🧹 Formatters' },
   { path: '/diff-tools', label: '🆚 Diff Tools' },
-  { path: '/editors', label: '📝 Editors' },
+  // { path: '/editors', label: '📝 Editors' },
   { path: '/regex-tools', label: '📐 Regex Tools' },
-  { path: '/code-editor', label: '💻 Code Editor' },
+  // { path: '/code-editor', label: '💻 Code Editor' },
   { path: '/encoderdecoder', label: '🔐 Encoder/Decoder' },
-  { path: '/dev-utils', label: '🛠️ Dev Utils' },
-  { path: '/grid-tools', label: '📊 Grid Tools' },
-  { path: '/network-tools', label: '🌐 Network Tools' },
-  { path: '/playgrounds', label: '🧪 Playgrounds' },
+  // { path: '/dev-utils', label: '🛠️ Dev Utils' },
+  // { path: '/grid-tools', label: '📊 Grid Tools' },
+  // { path: '/network-tools', label: '🌐 Network Tools' },
+  // { path: '/playgrounds', label: '🧪 Playgrounds' },
 ]
 
 export default function Sidebar() {

@@ -1,4 +1,4 @@
-import { useState, useEffect ,useCallback} from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Select from 'react-select';
 import './regexTools.css';
 
@@ -27,12 +27,11 @@ const RegexTools = () => {
       let highlighted = inputText;
 
       switch (selectedOperation) {
-        case 'match': {
+        case 'match':
           const matches = inputText.match(regex);
           result = matches ? matches.join(', ') : 'No matches found';
           highlighted = inputText.replace(regex, match => `<mark>${match}</mark>`);
           break;
-        }
         case 'replace':
           result = inputText.replace(regex, replacementText);
           break;
@@ -70,24 +69,23 @@ const RegexTools = () => {
   };
 
   return (
-    <div className="regex-wrapper">
-      <header>
-        <h1>🔍 Regex Playground</h1>
-        <p>Test, build, and understand your regular expressions visually</p>
-      </header>
+    <div className="regex-tools-container">
+      <h1 className="title">🔍 Regex Playground</h1>
+      <p className="subtitle">Test, build, and understand your regular expressions visually</p>
 
-      <div className="controls">
-        <label>Select Operation</label>
+      <div className="regex-tools-select">
+        <label className="label">Select Operation</label>
         <Select
           options={regexOptions}
           value={regexOptions.find(opt => opt.value === selectedOperation)}
           onChange={(opt) => setSelectedOperation(opt?.value || 'match')}
+          classNamePrefix="react-select"
         />
       </div>
 
-      <div className="main-grid">
-        <div className="section">
-          <label>Input Text</label>
+      <div className="input-output-area">
+        <div className="input-area">
+          <label className="label">Input Text</label>
           <textarea
             placeholder="Enter text to test against regex"
             value={inputText}
@@ -95,58 +93,60 @@ const RegexTools = () => {
           />
         </div>
 
-        <div className="section">
-          <label>Regex Pattern</label>
+        <div className="input-area">
+          <label className="label">Regex Pattern</label>
           <input
             type="text"
-            placeholder="e.g. \bword\b"
+            placeholder="e.g. \\bword\\b"
             value={regexPattern}
             onChange={(e) => setRegexPattern(e.target.value)}
+            className="regex-input"
           />
-          <div className="checkbox">
+
+          <div >
             <input
               type="checkbox"
               checked={caseSensitive}
               onChange={() => setCaseSensitive(!caseSensitive)}
+              id="case-sensitive"
             />
-            <label>Case Sensitive</label>
+            <label htmlFor="case-sensitive" >Case Sensitive</label>
           </div>
 
           {selectedOperation === 'replace' && (
             <>
-              <label>Replacement Text</label>
+              <label className="label" >Replacement Text</label>
               <input
                 type="text"
                 placeholder="Replacement"
                 value={replacementText}
                 onChange={(e) => setReplacementText(e.target.value)}
+                className="regex-input"
               />
             </>
           )}
         </div>
 
-        <div className="section">
-          <label>Output</label>
+        <div className="output-area">
+          <label className="label">Output</label>
           <textarea readOnly value={outputText} />
-          <button onClick={handleCopy} disabled={!outputText}>
-            📋 Copy Output
-          </button>
-        </div>
-
-        {selectedOperation === 'match' && (
-          <div className="section full-width">
-            <label>Highlighted Result</label>
-            <div
-              className="highlighted"
-              dangerouslySetInnerHTML={{ __html: highlightedText }}
-            />
+          <div className="footer">
+            <button onClick={handleCopy} disabled={!outputText}>📋 Copy Output</button>
           </div>
-        )}
+        </div>
       </div>
+
+      {selectedOperation === 'match' && (
+        <div>
+          <label className="label">Highlighted Result</label>
+          <div
+            className="highlighted"
+            dangerouslySetInnerHTML={{ __html: highlightedText }}
+          />
+        </div>
+      )}
     </div>
   );
 };
 
 export default RegexTools;
-// Removed conflicting local useCallback function
-

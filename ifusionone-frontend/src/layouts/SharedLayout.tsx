@@ -62,7 +62,7 @@ const SharedEditorLayout: React.FC<SharedEditorLayoutProps> = ({
               language={inputLang}
               value={inputValue}
               onChange={(value) => onInputChange(value || '')}
-              height="50vh"
+              height="65vh"
               width="100%"
             />
           </div>
@@ -73,7 +73,7 @@ const SharedEditorLayout: React.FC<SharedEditorLayoutProps> = ({
             <MonacoEditor
               language={outputLang}
               value={outputValue}
-              height="50vh"
+              height="65vh"
               width="100%"
               options={{ readOnly: true }}
             />

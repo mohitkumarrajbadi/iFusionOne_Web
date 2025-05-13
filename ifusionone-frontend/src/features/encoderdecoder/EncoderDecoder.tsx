@@ -113,8 +113,8 @@ const EncoderDecoder = () => {
             outputValue={output}
             onRunClick={handleGenerate}
             buttonLabel="Generate"
-            inputLang='text'
-            outputLang='text'
+            inputLang={tool ? tool.value : 'text'}
+            outputLang={tool ? tool.value : 'text'}
         />
     );
 };

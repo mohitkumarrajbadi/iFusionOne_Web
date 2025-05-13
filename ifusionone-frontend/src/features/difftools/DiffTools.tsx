@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from 'react';
 import Select from 'react-select';
 import { DiffEditor, loader, Monaco } from '@monaco-editor/react';
 
-import { options, supportedLanguages } from './difftools-utils';
+import { options, supportedLanguages } from './DiffToolsUtils';
 import { defineMonacoThemes } from '../../hooks/useMonacoEditorCustomTheme';
 import { useDetectLanguage } from '../../hooks/useDetectLanguage';
 import SharedLayout2 from '../../layouts/SharedLayout2';

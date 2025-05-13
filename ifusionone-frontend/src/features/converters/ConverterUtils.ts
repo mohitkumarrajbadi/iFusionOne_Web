@@ -3,7 +3,6 @@ import Papa from 'papaparse';
 import { marked } from 'marked';
 import he from 'he';
 import { xmlBeautifier, jsonBeautifier } from '../formatters/formattersUtils';
-// import * as BSON from 'bson';
 
 type JsonObject = Record<string, unknown>;
 type JsonArray = Array<unknown>;
@@ -19,8 +18,8 @@ const safeBeautify = (input: string, format?: 'json' | 'xml' | 'yaml'): string =
       return input; // Add YAML beautification logic if needed
     default:
       return input;
-    }
   }
+}
 
 
 // Utility: Flatten an object

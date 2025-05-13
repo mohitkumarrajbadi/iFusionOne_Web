@@ -55,7 +55,7 @@ export default function Home() {
       </div>
 
       <h1 className="home-title">
-        The Ultimate Open Source <span className="ifusion-text">iFusionOne</span> Platform 🚀
+        The Ultimate Open Source <span className="ifusion-text">Dev</span> Platform 🚀
       </h1>
 
       <p className="home-subtitle">
@@ -63,7 +63,7 @@ export default function Home() {
       </p>
 
       <a
-        href="https://github.com/your-org/ifusionone"
+        href="https://github.com/mohitkumarrajbadi/ifusionone_web"
         target="_blank"
         rel="noopener noreferrer"
         className="github-button"

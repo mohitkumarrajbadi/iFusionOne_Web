@@ -5,24 +5,20 @@ import { AiOutlineStar, AiFillStar } from 'react-icons/ai'
 import '../styles/Sidebar.css'
 import { useTheme } from '../hooks/useTheme'
 
+// Tool definition
 type Tool = {
   path: string
   label: string
 }
 
+// Static list of tools
 const allTools: Tool[] = [
   { path: '/converters', label: '🔄 Converters' },
   { path: '/validators', label: '✅ Validators' },
   { path: '/formatters', label: '🧹 Formatters' },
   { path: '/diff-tools', label: '🆚 Diff Tools' },
-  // { path: '/editors', label: '📝 Editors' },
   { path: '/regex-tools', label: '📐 Regex Tools' },
-  // { path: '/code-editor', label: '💻 Code Editor' },
   { path: '/encoderdecoder', label: '🔐 Encoder/Decoder' },
-  // { path: '/dev-utils', label: '🛠️ Dev Utils' },
-  // { path: '/grid-tools', label: '📊 Grid Tools' },
-  // { path: '/network-tools', label: '🌐 Network Tools' },
-  // { path: '/playgrounds', label: '🧪 Playgrounds' },
 ]
 
 export default function Sidebar() {
@@ -60,9 +56,9 @@ export default function Sidebar() {
       <div className="sidebar-fixed-top">
         <div className="sidebar-heading-logo">
           <h2 className="side-navbar-header">
-            <img src="/fuso-superhero-logo.png" alt="Fuso Logo" className="ifusionone-logo" /> iFusion
+            <img src="/fuso-superhero-logo.png" alt="Fuso Logo" className="ifusionone-logo" /> iFusionOne
           </h2>
-          <button onClick={toggleTheme} className="theme-toggle-btn">
+          <button onClick={toggleTheme} className="theme-toggle-btn" title="Toggle Theme">
             {theme === 'dark' ? <FiSun /> : <FiMoon />}
           </button>
         </div>
@@ -73,13 +69,14 @@ export default function Sidebar() {
           </Link>
         </div>
 
-        <div className="side-navbar-search">
+        <div className="side-navbar-search" role="search">
           <FiSearch />
           <input
             type="text"
             placeholder="Search tools..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            aria-label="Search tools"
           />
         </div>
       </div>
@@ -114,7 +111,7 @@ export default function Sidebar() {
                 />
               ))
             ) : (
-              <p className="no-results">No tool found</p>
+              <p className="no-results">No tools found matching "{search}"</p>
             )}
           </div>
         </div>
@@ -130,6 +127,7 @@ export default function Sidebar() {
   )
 }
 
+// Sidebar item component
 type SidebarItemProps = {
   tool: Tool
   isActive: boolean
@@ -140,11 +138,14 @@ type SidebarItemProps = {
 function SidebarItem({ tool, isActive, isFav, toggleFavorite }: SidebarItemProps) {
   return (
     <div className={`side-bar-link ${isActive ? 'active' : ''}`}>
-      <Link to={tool.path}>{tool.label}</Link>
+      <Link to={tool.path} aria-current={isActive ? 'page' : undefined}>{tool.label}</Link>
       <span
         className="favorite-icon"
         onClick={() => toggleFavorite(tool.path)}
         title={isFav ? 'Unfavorite' : 'Mark as favorite'}
+        role="button"
+        aria-label={isFav ? 'Remove from favorites' : 'Add to favorites'}
+        aria-pressed={isFav}
       >
         {isFav ? <AiFillStar color="#facc15" /> : <AiOutlineStar />}
       </span>

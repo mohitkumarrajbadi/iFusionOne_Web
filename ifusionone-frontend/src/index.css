@@ -1,6 +1,13 @@
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('./fonts/ttf/JetBrainsMono-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Define CSS Variables */
 :root {
   /* Typography */
-  /* --font-family: 'SF Pro Text', 'Segoe UI', Roboto, sans-serif; */
   --font-family: 'JetBrains Mono', monospace;
 
   /* Base Colors */
@@ -19,7 +26,7 @@
   --divider: #e5e5ea;
 
   /* Accent Colors */
-  --accent: #007aff;         /* iOS/macOS system blue */
+  --accent: #007aff;
   --accent-hover: #005fcc;
 
   /* Status Colors */
@@ -47,11 +54,15 @@
   --transition-slow: 0.4s ease-in-out;
 
   /* Other */
-  font-family: var(--font-family);
   color-scheme: light dark;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Apply font-family globally */
+body {
+  font-family: var(--font-family);
 }
 
 /* 🌙 Dark Theme — Inspired by macOS Monterey/Ventura dark mode */
@@ -88,7 +99,8 @@
 
 
 
-html,body {
+html,
+body {
   margin: 0;
   background-color: var(--bg);
   color: var(--text);

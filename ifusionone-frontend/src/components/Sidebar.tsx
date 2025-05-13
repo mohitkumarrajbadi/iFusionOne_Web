@@ -14,7 +14,7 @@ type Tool = {
 // Static list of tools
 const allTools: Tool[] = [
   { path: '/converters', label: '🔄 Converters' },
-  { path: '/validators', label: '✅ Validators' },
+  // { path: '/validators', label: '✅ Validators' },
   { path: '/formatters', label: '🧹 Formatters' },
   { path: '/diff-tools', label: '🆚 Diff Tools' },
   { path: '/regex-tools', label: '📐 Regex Tools' },

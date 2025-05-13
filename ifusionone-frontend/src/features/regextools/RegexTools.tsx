@@ -49,6 +49,7 @@ const RegexTools = () => {
       setHighlightedText(highlighted);
     } catch (err) {
       setOutputText(`❌ Error: ${err instanceof Error ? err.message : 'An unknown error occurred'}`);
+      setHighlightedText('');
     }
   }, [caseSensitive, inputText, regexPattern, replacementText, selectedOperation]);
 
@@ -103,19 +104,19 @@ const RegexTools = () => {
             className="regex-input"
           />
 
-          <div >
+          <div className="checkbox-area">
             <input
               type="checkbox"
               checked={caseSensitive}
               onChange={() => setCaseSensitive(!caseSensitive)}
               id="case-sensitive"
             />
-            <label htmlFor="case-sensitive" >Case Sensitive</label>
+            <label htmlFor="case-sensitive">Case Sensitive</label>
           </div>
 
           {selectedOperation === 'replace' && (
             <>
-              <label className="label" >Replacement Text</label>
+              <label className="label">Replacement Text</label>
               <input
                 type="text"
                 placeholder="Replacement"
@@ -137,7 +138,7 @@ const RegexTools = () => {
       </div>
 
       {selectedOperation === 'match' && (
-        <div>
+        <div className="highlight-section">
           <label className="label">Highlighted Result</label>
           <div
             className="highlighted"

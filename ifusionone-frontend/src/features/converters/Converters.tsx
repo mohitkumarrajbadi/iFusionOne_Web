@@ -122,13 +122,6 @@ export default function Converters() {
     }
   };
 
-  // const handleCopy = () => {
-  //   if (!outputText) return;
-  //   navigator.clipboard.writeText(outputText).then(() => {
-  //     alert('✅ Output copied to clipboard!');
-  //   });
-  // };
-
   return (
     <SharedEditorLayout
       title="🔁 Format Converter"

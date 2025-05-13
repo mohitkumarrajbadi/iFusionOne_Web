@@ -12,7 +12,7 @@ interface MonacoEditorProps {
 }
 
 const MonacoEditor = ({
-  height = "500px",
+  height = "100%",
   width = "100%",
   language = "javascript",
   value = "// Start coding...",

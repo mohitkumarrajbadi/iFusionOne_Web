@@ -19,7 +19,7 @@ class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       // Now this runs inside the single BrowserRouter
       console.log('ErrorBoundary: Redirecting to /error')
-      //  window.location.href = '/error'
+       window.location.href = '/error'
     }
     return this.props.children
   }

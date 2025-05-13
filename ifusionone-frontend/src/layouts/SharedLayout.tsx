@@ -56,24 +56,28 @@ const SharedEditorLayout: React.FC<SharedEditorLayoutProps> = ({
 
       <div className="input-output-area">
         <div className="input-area">
-          <h2 className="subtitle">Input:</h2>
-          <MonacoEditor
-            language={inputLang}
-            value={inputValue}
-            onChange={(value) => onInputChange(value || '')}
-            height="50vh"
-            width="35vw"
-          />
+          <h2 className="subtitle">{inputLang.toUpperCase()}</h2>
+          <div className="editor-wrapper">
+            <MonacoEditor
+              language={inputLang}
+              value={inputValue}
+              onChange={(value) => onInputChange(value || '')}
+              height="50vh"
+              width="100%"
+            />
+          </div>
         </div>
         <div className="output-area">
-          <h2 className="subtitle">Output:</h2>
-          <MonacoEditor
-            language={outputLang}
-            value={outputValue}
-            height="50vh"
-            width="35vw"
-            options={{ readOnly: true }}
-          />
+          <h2 className="subtitle">{outputLang.toUpperCase()}</h2>
+          <div className="editor-wrapper">
+            <MonacoEditor
+              language={outputLang}
+              value={outputValue}
+              height="50vh"
+              width="100%"
+              options={{ readOnly: true }}
+            />
+          </div>
         </div>
       </div>
 

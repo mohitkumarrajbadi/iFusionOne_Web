@@ -1,91 +1,102 @@
 .page-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
 }
 
 .main-content {
-    width: -webkit-fill-available;
+  width: -webkit-fill-available;
+}
+
+.main-content.full-width {
+  width: 100vw;
+}
+
+.sidebar-expand-btn {
+  position: absolute;
+  
+  z-index: 2;
+}
+
+.sidebar-expand-btn.hide {
+ display: none;
 }
 
 .tool-container {
-    height: 100vh;
-    overflow: hidden;
-    overflow-y: scroll;
+  height: 100vh;
+  overflow: hidden;
+  overflow-y: scroll;
 }
-
 
 /* Control (main select input) */
 .react-select__control {
-    background-color: var(--surface) !important;
-    color: var(--text) !important;
-    border: 1px solid var(--border) !important;
-    box-shadow: none !important;
-    transition: border-color 0.3s ease, background-color 0.3s ease;
-    min-height: 38px !important;
-  }
-  
-  /* Hovered control */
-  .react-select__control:hover {
-    border-color: var(--accent) !important;
-  }
-  
-  /* Selected value */
-  .react-select__single-value {
-    color: var(--text) !important;
-    font-weight: 500 !important;
-  }
-  
-  /* Dropdown indicator (arrow) */
-  .react-select__indicator {
-    color: var(--secondary) !important;
-    transition: color 0.3s ease !important;
-  }
-  
-  .react-select__indicator:hover {
-    color: var(--accent) !important;
-  }
-  
-  /* Menu (dropdown list container) */
-  .react-select__menu {
-    background-color: var(--surface) !important;
-    border: 1px solid var(--border) !important;
-    box-shadow: var(--shadow) !important;
-    z-index: 10 !important;
-    overflow: hidden !important;
-  }
-  
-  /* Menu list (options container) */
-  .react-select__menu-list {
-    padding: 0 !important;
-  }
-  
-  /* Option item */
-  .react-select__option {
-    background-color: transparent !important;
-    color: var(--text) !important;
-    padding: 10px 12px !important;
-    transition: background-color 0.2s ease !important;
-    cursor: pointer !important;
-    font-size: 0.95rem !important;
-  }
-  
-  /* Focused option (hover or keyboard focus) */
-  .react-select__option--is-focused {
-    background-color: var(--button-hover) !important;
-    color: var(--text) !important;
-  }
-  
-  /* Selected option */
-  .react-select__option--is-selected {
-    background-color: var(--accent) !important;
-    color: #fff !important;
-  }
-  
-  /* Placeholder text */
-  .react-select__placeholder {
-    color: var(--secondary) !important;
-  }
-  
-  
+  background-color: var(--surface) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: none !important;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+  min-height: 38px !important;
+}
+
+/* Hovered control */
+.react-select__control:hover {
+  border-color: var(--accent) !important;
+}
+
+/* Selected value */
+.react-select__single-value {
+  color: var(--text) !important;
+  font-weight: 500 !important;
+}
+
+/* Dropdown indicator (arrow) */
+.react-select__indicator {
+  color: var(--secondary) !important;
+  transition: color 0.3s ease !important;
+}
+
+.react-select__indicator:hover {
+  color: var(--accent) !important;
+}
+
+/* Menu (dropdown list container) */
+.react-select__menu {
+  background-color: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow) !important;
+  z-index: 10 !important;
+  overflow: hidden !important;
+}
+
+/* Menu list (options container) */
+.react-select__menu-list {
+  padding: 0 !important;
+}
+
+/* Option item */
+.react-select__option {
+  background-color: transparent !important;
+  color: var(--text) !important;
+  padding: 10px 12px !important;
+  transition: background-color 0.2s ease !important;
+  cursor: pointer !important;
+  font-size: 0.95rem !important;
+}
+
+/* Focused option (hover or keyboard focus) */
+.react-select__option--is-focused {
+  background-color: var(--button-hover) !important;
+  color: var(--text) !important;
+}
+
+/* Selected option */
+.react-select__option--is-selected {
+  background-color: var(--accent) !important;
+  color: #fff !important;
+}
+
+/* Placeholder text */
+.react-select__placeholder {
+  color: var(--secondary) !important;
+}

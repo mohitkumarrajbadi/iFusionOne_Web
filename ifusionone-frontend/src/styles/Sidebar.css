@@ -1,7 +1,7 @@
 .side-navbar {
   background-color: var(--surface);
   border-right: 1px solid var(--border);
-  width: 22vw;
+  width: 20vw;
   max-width: 100%;
   box-shadow: var(--shadow);
   display: flex;
@@ -12,8 +12,15 @@
   z-index: 10;
   backdrop-filter: blur(8px);
   /* Slightly softened background blur */
-  transition: background 0.3s ease, box-shadow 0.3s ease;
+  transition: background, transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.side-navbar.collapsed {
+  transform: translateX(-100%);
+  position: absolute;
+}
+
+
 
 @media (max-width: 768px) {
   .side-navbar {
@@ -51,6 +58,10 @@
   padding: 1rem 0rem 1rem 0rem;
 }
 
+.sidebar-heading-logo .control-btns button {
+  margin-left: 16px;
+}
+
 .ifusionone-logo {
   height: 36px;
   width: 36px;
@@ -83,7 +94,6 @@
   flex-wrap: nowrap;
   justify-content: flex-start;
   gap: 5px;
-
 }
 
 .sidebar-section-title {
@@ -163,14 +173,14 @@
   font-style: italic;
 }
 
-
 .sidebar-footer {
   padding-bottom: 5%;
 }
 
-
 .theme-toggle-btn {
-  background: var(--bg);
+  /* background: var(--bg);
+   */
+  background: none;
   border: none;
   color: var(--text);
   /* font-size: 0.9rem; */

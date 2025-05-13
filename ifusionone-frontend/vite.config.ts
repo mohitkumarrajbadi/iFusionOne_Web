@@ -35,12 +35,12 @@ export default defineConfig({
         start_url: '/',
         icons: [
           {
-            src: '/fuso-superhero-logo.png',
+            src: '/fuso-superhero-logo-192.png',
             sizes: '192x192',
             type: 'image/png'
           },
           {
-            src: '/fuso-superhero-logo.png',
+            src: '/fuso-superhero-logo-512.png',
             sizes: '512x512',
             type: 'image/png'
           }

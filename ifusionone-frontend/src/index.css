@@ -5,96 +5,81 @@
   font-style: normal;
 }
 
-/* Define CSS Variables */
 :root {
   /* Typography */
   --font-family: 'JetBrains Mono', monospace;
 
-  /* Base Colors */
-  --bg: #f9f9f9;
+  /* Discord-inspired Light Theme */
+  --bg: #f2f3f5;
   --surface: #ffffff;
-  --surface-alt: #f2f2f7;
-  --surface-background: #f7f8fa;
+  --surface-alt: #ebedef;
+  --surface-background: #e3e5e8;
 
-  /* Text Colors */
-  --text: #1c1c1e;
-  --text-secondary: #6e6e73;
-  --text-muted: #a1a1a6;
+  --text: #2e3338;
+  --text-secondary: #4f545c;
+  --text-muted: #747f8d;
 
-  /* Borders & Dividers */
-  --border: rgba(60, 60, 67, 0.29);
-  --divider: #e5e5ea;
+  --border: rgba(0, 0, 0, 0.1);
+  --divider: #d4d7dc;
 
-  /* Accent Colors */
-  --accent: #007aff;
-  --accent-hover: #005fcc;
+  --accent: #5865f2;
+  --accent-hover: #4752c4;
 
-  /* Status Colors */
-  --success: #34c759;
-  --warning: #ffcc00;
-  --danger: #ff3b30;
+  --success: #3ba55d;
+  --warning: #faa61a;
+  --danger: #ed4245;
 
-  /* Button */
-  --button-bg: #e5e5ea;
-  --button-hover: #d1d1d6;
-  --button-active: #c7c7cc;
-  --button-text: #000000;
+  --button-bg: #e3e5e8;
+  --button-hover: #dbdee1;
+  --button-active: #d1d4d8;
+  --button-text: #2e3338;
 
-  /* Radius & Shadows */
-  --radius: 12px;
+  --radius: 8px;
   --shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
 
-  /* Editor */
-  --editor-bg: #f4f4f4;
-  --editor-border: #e1e1e1;
+  --editor-bg: #f4f4f5;
+  --editor-border: #dadde1;
 
-  /* Transitions */
   --transition-fast: 0.2s ease-in-out;
   --transition-medium: 0.3s ease;
   --transition-slow: 0.4s ease-in-out;
 
-  /* Other */
   color-scheme: light dark;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Apply font-family globally */
-body {
-  font-family: var(--font-family);
-}
-
-/* 🌙 Dark Theme — Inspired by macOS Monterey/Ventura dark mode */
 :root[data-theme='dark'] {
-  --bg: #1c1c1e;
-  --surface: #2c2c2e;
-  --surface-alt: #3a3a3c;
-  --surface-background: #1e1e1e;
+  /* Discord-inspired Dark Theme */
+  --bg: #313338;
+  --surface: #2b2d31;
+  --surface-alt: #1e1f22;
+  --surface-background: #2a2d31;
 
-  --text: #f2f2f7;
-  --text-secondary: #a1a1aa;
-  --text-muted: #8e8e93;
+  --text: #f2f3f5;
+  --text-secondary: #b5bac1;
+  --text-muted: #8e9297;
 
-  --border: rgba(255, 255, 255, 0.1);
-  --divider: #48484a;
+  --border: rgba(255, 255, 255, 0.08);
+  --divider: #4f545c;
 
-  --accent: #0a84ff;
-  --accent-hover: #0060df;
+  --accent: #5865f2;
+  --accent-hover: #4752c4;
 
-  --success: #30d158;
-  --warning: #ffd60a;
-  --danger: #ff453a;
+  --success: #3ba55d;
+  --warning: #faa61a;
+  --danger: #ed4245;
 
-  --button-bg: #444447;
-  --button-hover: #505052;
-  --button-active: #636366;
+  --button-bg: #4e5058;
+  --button-hover: #5b5d65;
+  --button-active: #666870;
   --button-text: #ffffff;
 
   --shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 
-  --editor-bg: #1e1e1e;
-  --editor-border: #2c2c2e;
+  --editor-bg: #1e1f22;
+  --editor-border: #2b2d31;
 }
 
 

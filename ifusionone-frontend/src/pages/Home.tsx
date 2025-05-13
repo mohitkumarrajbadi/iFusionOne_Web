@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FaGithub } from 'react-icons/fa';
+import { FaGithub, FaDiscord } from 'react-icons/fa';
 import '../styles/Home.css';
 
 export default function Home() {
@@ -70,6 +70,16 @@ export default function Home() {
       >
         <FaGithub size={20} style={{ marginRight: '8px' }} />
         Star us on GitHub
+      </a>
+
+      <a
+        href="https://discord.gg/9Bpsg3Pp" // 🔁 Replace with your actual Discord invite link
+        target="_blank"
+        rel="noopener noreferrer"
+        className="discord-button"
+      >
+        <FaDiscord size={20} style={{ marginRight: '8px' }} />
+        Join us on Discord – Let's build & vibe!
       </a>
 
       <p className="home-note">

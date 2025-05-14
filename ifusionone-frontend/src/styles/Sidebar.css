@@ -52,7 +52,7 @@
 .sidebar-heading-logo {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
   padding: 1rem 0rem 1rem 0rem;
@@ -232,4 +232,9 @@
   align-content: flex-start;
   justify-content: center;
   gap: 5px;
+}
+
+.control-btns{
+  display: flex;
+  flex-direction: row;
 }

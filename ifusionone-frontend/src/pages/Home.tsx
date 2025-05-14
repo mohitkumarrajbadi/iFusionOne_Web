@@ -2,10 +2,56 @@ import { useState, useEffect } from 'react';
 import { FaGithub, FaDiscord } from 'react-icons/fa';
 import '../styles/Home.css';
 
+import { CreateMLCEngine, MLCEngine } from "@mlc-ai/web-llm";
+
 export default function Home() {
   const [clickCount, setClickCount] = useState(0);
   const [launching, setLaunching] = useState(false);
   const [countdown, setCountdown] = useState<number | null>(null);
+  const [engine, setEngine] = useState<MLCEngine | null>(null);
+
+  const selectedModel = "Llama-3.1-8B-Instruct-q4f32_1-MLC";
+
+  const initEngine = async () => {
+    if (engine) return engine;
+
+    const newEngine = await CreateMLCEngine(selectedModel, {
+      initProgressCallback: (progress: any) => {
+        console.log("Loading progress:", progress);
+      },
+    });
+
+    setEngine(newEngine);
+    return newEngine;
+  };
+
+  const getAIResponse = async (query: string): Promise<string> => {
+    const llm = await initEngine();
+
+    const messages = [
+      { role: "system", content: "You are a helpful AI assistant." },
+      { role: "user", content: query },
+    ];
+
+    const reply = await llm.chat.completions.create({ messages });
+    const content = reply.choices[0].message.content;
+
+    if (!content) throw new Error("Received empty response from LLM.");
+
+    console.log("LLM Reply:", reply.choices[0].message);
+    console.log("Token Usage:", reply.usage);
+
+    return content;
+  };
+
+  const testWebLLM = async () => {
+    try {
+      const result = await getAIResponse("Tell me a developer joke");
+      alert("AI says: " + result);
+    } catch (err) {
+      console.error("WebLLM Test Failed:", err);
+    }
+  };
 
   useEffect(() => {
     if (clickCount === 1) setCountdown(10);
@@ -73,7 +119,7 @@ export default function Home() {
       </a>
 
       <a
-        href="https://discord.gg/9Bpsg3Pp" // 🔁 Replace with your actual Discord invite link
+        href="https://discord.gg/9Bpsg3Pp"
         target="_blank"
         rel="noopener noreferrer"
         className="discord-button"
@@ -81,6 +127,10 @@ export default function Home() {
         <FaDiscord size={20} style={{ marginRight: '8px' }} />
         Join us on Discord – Let's build & vibe!
       </a>
+
+      {/* <button onClick={testWebLLM} className="github-button">
+        Test WebLLM in Browser
+      </button> */}
 
       <p className="home-note">
         Built by developers, for developers. Join the community and shape the future of productivity.<br />

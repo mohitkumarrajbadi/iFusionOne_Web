@@ -2,7 +2,6 @@
   "name": "ifusionone-backend",
   "version": "1.0.0",
   "main": "index.js",
-  
   "scripts": {
     "dev": "ts-node server.ts",
     "build": "tsc",
@@ -24,7 +23,6 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^5.1.0",
-    "node-llama-cpp": "^3.7.0",
     "path": "^0.12.7"
   }
 }

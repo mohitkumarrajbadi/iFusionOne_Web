@@ -52,7 +52,7 @@ const BugBlasterGame: React.FC = () => {
   const explosionImgRef = useRef<HTMLImageElement | null>(null);
 
   const moveDirection = useRef<number>(0);
-  const moveSpeed = 6;
+  const moveSpeed = 1;
 
 
   // Replace your CANVAS_WIDTH and CANVAS_HEIGHT constants and add this state at the top of your component:
@@ -84,11 +84,19 @@ const BugBlasterGame: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (!isStarted || gameOver) return;
+    if (!isStarted || gameOver) {
+      // Reset speed to initial value when the game starts or ends
+      speedRef.current = 2;
+      return;
+    }
+  
+    // const updateSpeed = speedRef.current = Math.min(0.1 + Math.floor(scoreRef.current / 50000), 8);
+    
     const speedInterval = setInterval(() => {
-      speedRef.current = Math.min(speedRef.current + 0.0002, 8);
-    }, 200);
-    return () => clearInterval(speedInterval);
+      speedRef.current = Math.min(speedRef.current + 0.01 , 8);
+    }, 50);
+  
+    return () => clearInterval(speedInterval); 
   }, [isStarted, gameOver]);
 
   useEffect(() => {
@@ -181,10 +189,6 @@ const BugBlasterGame: React.FC = () => {
       ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
       drawStars();
 
-      if (moveDirection.current) {
-        ship.current.x += moveDirection.current * moveSpeed;
-        ship.current.x = Math.max(20, Math.min(CANVAS_WIDTH - 20, ship.current.x));
-      }
 
       bullets.current = bullets.current.filter((b) => b.y > 0);
       bullets.current.forEach((b) => (b.y -= 10));

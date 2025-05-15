@@ -1,38 +1,66 @@
 .game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  color: var(--text-color);
-  background: var(--background-color);
+  color: var(--text);
+  background: linear-gradient(180deg, var(--surface-alt), var(--surface-background));
   height: 100vh;
   overflow: hidden;
-  font-family: 'Press Start 2P', monospace;
+  font-family: var(--font-family);
+  padding: 0 10px;
 }
 
-.title {
-  font-size: 2rem;
+.game-container > .title {
+  font-size: clamp(1.5rem, 4vw, 3rem); /* Responsive font size */
   margin-top: 10px;
+  color: var(--accent);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
-.start-btn {
+.game-container > .start-btn {
   margin-top: 20px;
   padding: 12px 24px;
-  font-size: 1rem;
-  font-family: 'Press Start 2P', monospace;
-  background: #fff;
-  color: black;
+  font-size: clamp(0.8rem, 2vw, 1.2rem); /* Responsive font size */
+  font-family: var(--font-family);
+  background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+  color: var(--button-text);
   border: none;
+  border-radius: var(--radius);
   cursor: pointer;
-  transition: 0.2s ease-in;
+  transition: transform var(--transition-fast), background var(--transition-fast);
+  box-shadow: var(--shadow);
 }
 
-.start-btn:hover {
-  background: #ccc;
+.game-container > .start-btn:hover {
+  background: linear-gradient(90deg, var(--accent-hover), var(--accent));
+  transform: scale(1.05);
 }
 
-.game-canvas {
-  margin-top: 10px;
+.game-container > .game-canvas {
+  margin-top: 20px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 800px; /* Limit canvas width for smaller screens */
+  height: auto; /* Maintain aspect ratio */
 }
 
-.score-panel {
-  margin-top: 10px;
-  font-size: 1rem;
+.game-container > .score-panel {
+  margin-top: 20px;
+  font-size: clamp(0.8rem, 2vw, 1.2rem); /* Responsive font size */
+  color: var(--text);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 800px;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.game-container > .score-panel p {
+  margin: 0;
 }

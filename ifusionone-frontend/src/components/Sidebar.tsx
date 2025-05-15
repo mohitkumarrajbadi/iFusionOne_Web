@@ -6,10 +6,12 @@ import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import "../styles/Sidebar.css";
 import { useTheme } from "../hooks/useTheme";
 
-// Tool definition
+// Tool type same as Plugin type in App (just label added)
 type Tool = {
   path: string;
   label: string;
+  name: string; // plugin name
+  icon: string; // icon name
 };
 
 type SideBarProps = {
@@ -17,23 +19,45 @@ type SideBarProps = {
   collapseSidebar: () => void;
 };
 
-const allTools: Tool[] = [
-  { path: "/converters", label: "🔄 Converters" },
-  { path: "/formatters", label: "🧹 Formatters" },
-  { path: "/diff-tools", label: "🆚 Diff Tools" },
-  { path: "/regex-tools", label: "📐 Regex Tools" },
-  { path: "/encoderdecoder", label: "🔐 Encoder/Decoder" },
-];
-
 export default function Sidebar({ isCollapsed, collapseSidebar }: SideBarProps) {
   const { theme, toggleTheme } = useTheme();
   const [search, setSearch] = useState("");
   const [favorites, setFavorites] = useState<string[]>([]);
+  const [tools, setTools] = useState<Tool[]>([]);
   const location = useLocation();
 
   useEffect(() => {
     const favs = JSON.parse(localStorage.getItem("favorites") || "[]");
     setFavorites(favs);
+  }, []);
+
+  // Dynamically load plugins/tools
+  useEffect(() => {
+    const loadTools = async () => {
+      const modules = import.meta.glob("../features/*/*.tsx", { eager: true });
+      const loadedTools: Tool[] = [];
+
+      for (const path in modules) {
+        const mod = modules[path] as { default: any };
+        console.log(`[Tool] Module Export:`, mod);
+        console.log(`[Tool] Path: ${path}`);
+        if (mod?.default?.name && mod.default.route && mod.default.component) {
+          loadedTools.push({
+            path: mod.default.route,
+            label: mod.default.name,
+            name: mod.default.name,
+            icon: mod.default.icon,
+          });
+          console.log(`[Tool] Loaded: ${mod.default.name} at ${mod.default.route}`);
+        } else {
+          console.warn(`Invalid plugin/tool in: ${path}`);
+        }
+      }
+
+      setTools(loadedTools);
+    };
+
+    loadTools();
   }, []);
 
   const toggleFavorite = (toolPath: string) => {
@@ -47,15 +71,15 @@ export default function Sidebar({ isCollapsed, collapseSidebar }: SideBarProps) 
 
   const filteredTools = useMemo(
     () =>
-      allTools.filter((tool) =>
+      tools.filter((tool) =>
         tool.label.toLowerCase().includes(search.trim().toLowerCase())
       ),
-    [search]
+    [search, tools]
   );
 
   const favoriteTools = useMemo(
-    () => allTools.filter((tool) => favorites.includes(tool.path)),
-    [favorites]
+    () => tools.filter((tool) => favorites.includes(tool.path)),
+    [favorites, tools]
   );
 
   return (
@@ -161,6 +185,12 @@ function SidebarItem({ tool, isActive, isFav, toggleFavorite }: SidebarItemProps
         aria-current={isActive ? "page" : undefined}
         className="sidebar-tool-link"
       >
+        {/* Render icon if exists */}
+        {tool.icon && (
+          <span className="sidebar-tool-icon" aria-hidden="true" style={{ marginRight: "8px", verticalAlign: "middle" }}>
+            {tool.icon}
+          </span>
+        )}
         {tool.label}
       </Link>
       <span
@@ -179,16 +209,22 @@ function SidebarItem({ tool, isActive, isFav, toggleFavorite }: SidebarItemProps
   );
 }
 
+
 type SidebarSectionProps = {
   title: string;
+  icon?: React.ReactNode;
   children: React.ReactNode;
 };
 
-function SidebarSection({ title, children }: SidebarSectionProps) {
+function SidebarSection({ title, icon, children }: SidebarSectionProps) {
   return (
     <div className="sidebar-section">
-      <p className="sidebar-section-title">{title}</p>
+      <p className="sidebar-section-title">
+        {icon && <span style={{ marginRight: 6, verticalAlign: "middle" }}>{icon}</span>}
+        {title}
+      </p>
       <div className="sidebar-search-results">{children}</div>
     </div>
   );
 }
+

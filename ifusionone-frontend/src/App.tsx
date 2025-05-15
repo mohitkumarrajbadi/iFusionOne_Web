@@ -2,22 +2,22 @@ import { useEffect, useState } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { useSWUpdate } from './hooks/useSWUpdate'
 import PageContainer from './components/PageContainer'
-import Home from './pages/Home'
-import Converters from './features/converters/Converters'
-import Formatters from './features/formatters/Formatters'
-import DiffTools from './features/difftools/DiffTools'
-import Settings from './pages/Settings'
-import Error from './pages/Error'
-import RegexTools from './features/regextools/RegexTools'
-import Generators from './features/generators/Generators'
-import EncoderDecoder from './features/encoderdecoder/EncoderDecoder'
-import SchemaViewer from './features/schemaviewer/SchemaViewer'
 import FusoStoryPage from './pages/FusoStoryPage'
+import Home from './pages/Home'
+import Error from './pages/Error'
+
+// Define Plugin type
+interface Plugin {
+  name: string
+  route: string
+  component: React.FC
+}
 
 function App() {
   const { updateAvailable, reload } = useSWUpdate()
   const [deferredPrompt, setDeferredPrompt] = useState<Event | null>(null)
   const [showInstallButton, setShowInstallButton] = useState(false)
+  const [pluginRoutes, setPluginRoutes] = useState<Plugin[]>([])
   const location = useLocation()
 
   useEffect(() => {
@@ -42,29 +42,59 @@ function App() {
     }
   }
 
-  // Hide sidebar only for FusoStoryPage
   const hideSidebarRoutes = ['/fuso-story']
   const hideSidebar = hideSidebarRoutes.includes(location.pathname)
+
+  // Dynamically load plugins
+useEffect(() => {
+  const loadPlugins = async () => {
+    const modules = import.meta.glob('./features/*/*.tsx', { eager: true });
+    const loadedPlugins: Plugin[] = [];
+
+    for (const path in modules) {
+      const mod = modules[path] as { default: Plugin };
+
+      // Debug check
+      // console.log(`[Plugin] Path: ${path}`);
+      // console.log(`[Plugin] Module Export:`, mod);
+
+      if (
+        mod?.default?.name &&
+        typeof mod.default.component === 'function'
+      ) {
+        loadedPlugins.push(mod.default);
+      } else {
+        console.warn(`Invalid plugin in: ${path}`);
+      }
+    }
+    // console.log(`[Plugin] Loaded Plugins:`, loadedPlugins);
+    setPluginRoutes(loadedPlugins);
+  };
+
+  loadPlugins();
+}, []);
+
+
 
   return (
     <PageContainer hideSidebar={hideSidebar}>
       {showInstallButton && (
         <div style={{ marginBottom: '1rem', textAlign: 'center' }}>
-          <button onClick={handleInstallClick}>
-            📲 Install App
-          </button>
+          <button onClick={handleInstallClick}>📲 Install App</button>
         </div>
       )}
 
       {updateAvailable && (
-        <div style={{
-          padding: '1rem',
-          backgroundColor: 'var(--accent)',
-          color: '#fff',
-          textAlign: 'center',
-          borderRadius: 'var(--radius)',
-          marginBottom: '1rem'
-        }}>
+        <div
+          style={{
+            padding: '1rem',
+            backgroundColor: 'var(--accent)',
+            color: '#fff',
+            textAlign: 'center',
+            borderRadius: 'var(--radius)',
+            marginBottom: '1rem',
+          }}
+        >
           🔁 A new version is available!
           <button
             onClick={reload}
@@ -75,7 +105,7 @@ function App() {
               border: 'none',
               padding: '6px 12px',
               borderRadius: '8px',
-              cursor: 'pointer'
+              cursor: 'pointer',
             }}
           >
             Refresh Now
@@ -84,17 +114,24 @@ function App() {
       )}
 
       <Routes>
+        {/* Static route */}
         <Route path="/" element={<Home />} />
-        <Route path="/converters" element={<Converters />} />
-        <Route path="/formatters" element={<Formatters />} />
-        <Route path="/diff-tools" element={<DiffTools />} />
-        <Route path="/settings" element={<Settings />} />
         <Route path="/error" element={<Error />} />
-        <Route path="/regex-tools" element={<RegexTools />} />
-        <Route path="/generators" element={<Generators />} />
-        <Route path="/encoderdecoder" element={<EncoderDecoder />} />
-        <Route path="/schema-viewer" element={<SchemaViewer />} />
         <Route path="/fuso-story" element={<FusoStoryPage />} />
+        
+
+        {/* Dynamically loaded routes */}
+        {pluginRoutes.map((plugin) => (
+          // console.log(`[Plugin] Registering route: ${plugin.route}`),
+          <Route
+            key={plugin.name.toLowerCase()}
+            path={plugin.route}
+            element={<plugin.component />}
+          />
+        ))}
+
+        {/* Default home route (optional fallback) */}
+        <Route path="*" element={<div>🔍 Not Found</div>} />
       </Routes>
     </PageContainer>
   )

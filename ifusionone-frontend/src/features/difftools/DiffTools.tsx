@@ -115,4 +115,9 @@ const DiffTools = () => {
   );
 };
 
-export default DiffTools;
+export default {
+  name: 'Diff Tools',
+  route: '/diff-tools',
+  component: DiffTools,
+  icon: '🆚',
+};

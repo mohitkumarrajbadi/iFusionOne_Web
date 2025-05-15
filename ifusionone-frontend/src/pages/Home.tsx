@@ -128,9 +128,9 @@ export default function Home() {
         Join us on Discord – Let's build & vibe!
       </a>
 
-      {/* <button onClick={testWebLLM} className="github-button">
+      <button onClick={testWebLLM} className="github-button">
         Test WebLLM in Browser
-      </button> */}
+      </button>
 
       <p className="home-note">
         Built by developers, for developers. Join the community and shape the future of productivity.<br />

@@ -5,6 +5,7 @@ import {
   javaBeautifier, javascriptBeautifier, jsonBeautifier, pythonBeautifier,
   rubyBeautifier, sqlBeautifier, typescriptBeautifier, xmlBeautifier, yamlBeautifier
 } from './formattersUtils';
+import { Form } from 'react-router-dom';
 
 const formatterOptions = [
   { label: 'JSON', value: 'json' },
@@ -103,4 +104,10 @@ const Formatters = () => {
   );
 };
 
-export default Formatters;
+export default {
+  name: 'Formatter',
+  route: '/formatters',
+  component: Formatters,
+  icon: '🧹',
+};
+

@@ -1,13 +1,18 @@
-import { useEffect, useMemo, useState, useCallback } from 'react';
+import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import SharedEditorLayout from '../../layouts/SharedLayout';
-import { ConverterOption, converters, ConverterStorageData, LOCAL_STORAGE_KEY, converterFunctionMap } from './constants';
+import {
+  ConverterOption,
+  converters,
+  ConverterStorageData,
+  LOCAL_STORAGE_KEY,
+  converterFunctionMap,
+} from './constants';
 
-export default function Converters() {
+function Converters() {
   const [converterSelected, setConverterSelected] = useState<ConverterOption>(converters[0]);
   const [inputText, setInputText] = useState('');
   const [outputText, setOutputText] = useState('');
 
-  // Load from localStorage
   useEffect(() => {
     try {
       const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -23,7 +28,6 @@ export default function Converters() {
     }
   }, []);
 
-  // Save to localStorage
   useEffect(() => {
     const data: ConverterStorageData = {
       converterSelected,
@@ -71,3 +75,10 @@ export default function Converters() {
     />
   );
 }
+
+export default {
+  name: 'Converters',
+  route: '/converters',
+  component: Converters,
+  icon: '🔁',
+};

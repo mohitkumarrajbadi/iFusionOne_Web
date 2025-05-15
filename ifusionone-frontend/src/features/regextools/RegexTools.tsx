@@ -150,4 +150,10 @@ const RegexTools = () => {
   );
 };
 
-export default RegexTools;
+export default {
+  name: 'RegexTools',
+  route: '/regex-tools',
+  component: RegexTools,
+  icon: '🔍',
+};
+

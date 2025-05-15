@@ -119,4 +119,9 @@ const EncoderDecoder = () => {
     );
 };
 
-export default EncoderDecoder;
+export default {
+  name: 'Encoder & Decoder',
+  route: '/encoder-decoder',
+  component: EncoderDecoder,
+    icon: '🔐',
+};

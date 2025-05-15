@@ -52,7 +52,7 @@ const BugBlasterGame: React.FC = () => {
   const explosionImgRef = useRef<HTMLImageElement | null>(null);
 
   const moveDirection = useRef<number>(0);
-  const moveSpeed = 1;
+  // const moveSpeed = 1;
 
 
   // Replace your CANVAS_WIDTH and CANVAS_HEIGHT constants and add this state at the top of your component:

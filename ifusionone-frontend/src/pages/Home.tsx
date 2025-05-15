@@ -28,7 +28,7 @@ export default function Home() {
   const getAIResponse = async (query: string): Promise<string> => {
     const llm = await initEngine();
 
-    const messages = [
+    const messages: { role: "system" | "user"; content: string }[] = [
       { role: "system", content: "You are a helpful AI assistant." },
       { role: "user", content: query },
     ];

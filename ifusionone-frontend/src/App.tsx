@@ -5,6 +5,7 @@ import PageContainer from './components/PageContainer'
 import FusoStoryPage from './pages/FusoStoryPage'
 import Home from './pages/Home'
 import Error from './pages/Error'
+import { Analytics } from '@vercel/analytics/react';
 
 // Define Plugin type
 interface Plugin {
@@ -133,6 +134,7 @@ useEffect(() => {
         {/* Default home route (optional fallback) */}
         <Route path="*" element={<div>🔍 Not Found</div>} />
       </Routes>
+      <Analytics />
     </PageContainer>
   )
 }

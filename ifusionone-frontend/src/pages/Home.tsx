@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { FaGithub, FaDiscord } from 'react-icons/fa';
 import '../styles/Home.css';
-
 import { CreateMLCEngine, MLCEngine } from "@mlc-ai/web-llm";
 
 export default function Home() {

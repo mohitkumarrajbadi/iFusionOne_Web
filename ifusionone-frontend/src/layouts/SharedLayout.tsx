@@ -25,7 +25,7 @@ interface SharedEditorLayoutProps {
 
 const SharedEditorLayout: React.FC<SharedEditorLayoutProps> = ({
   title,
-  subtitle,
+  // subtitle,
   options,
   selected,
   onSelectChange,
@@ -39,19 +39,22 @@ const SharedEditorLayout: React.FC<SharedEditorLayoutProps> = ({
 }) => {
   return (
     <div className="layout-container">
-      <h1 className="title">{title}</h1>
-      <p className="subtitle">{subtitle}</p>
 
-      <div className="formatter-type">
-        <label htmlFor="selectType">Select:</label>
-        <Select
-          id="selectType"
-          options={options}
-          value={selected}
-          onChange={onSelectChange}
-          className="react-select-container"
-          classNamePrefix="react-select"
-        />
+      <div className="layout-container-header">
+        <h1 className="layout-header-title">{title}</h1>
+        {/* <h2 className="subtitle">{subtitle}</h2>
+         */}
+        <div className="formatter-type">
+          {/* <label htmlFor="selectType">Select:</label> */}
+          <Select
+            id="selectType"
+            options={options}
+            value={selected}
+            onChange={onSelectChange}
+            className="react-select-container"
+            classNamePrefix="react-select"
+          />
+        </div>
       </div>
 
       <div className="input-output-area">
@@ -72,7 +75,7 @@ const SharedEditorLayout: React.FC<SharedEditorLayoutProps> = ({
           <div className="editor-wrapper">
             <MonacoEditor
               language={outputLang}
-              value={outputValue}
+              value={outputValue}  
               height="65vh"
               width="100%"
               options={{ readOnly: true }}

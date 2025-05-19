@@ -71,18 +71,22 @@ const RegexTools = () => {
 
   return (
     <div className="regex-tools-container">
-      <h1 className="title">🔍 Regex Playground</h1>
-      <p className="subtitle">Test, build, and understand your regular expressions visually</p>
 
-      <div className="regex-tools-select">
-        <label className="label">Select Operation</label>
-        <Select
-          options={regexOptions}
-          value={regexOptions.find(opt => opt.value === selectedOperation)}
-          onChange={(opt) => setSelectedOperation(opt?.value || 'match')}
-          classNamePrefix="react-select"
-        />
+      <div className='regex-tools-header'>
+        <h1 className="title">🔍 Regex Playground</h1>
+        {/* <p className="subtitle">Test, build, and understand your regular expressions visually</p> */}
+
+        <div className="regex-tools-select">
+          {/* <label className="label">Select Operation</label> */}
+          <Select
+            options={regexOptions}
+            value={regexOptions.find(opt => opt.value === selectedOperation)}
+            onChange={(opt) => setSelectedOperation(opt?.value || 'match')}
+            classNamePrefix="react-select"
+          />
+        </div>
       </div>
+
 
       <div className="input-output-area">
         <div className="input-area">

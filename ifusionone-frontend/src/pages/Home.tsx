@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { FaGithub, FaDiscord } from 'react-icons/fa';
 import '../styles/Home.css';
 
-
 export default function Home() {
   const [clickCount, setClickCount] = useState(0);
   const [launching, setLaunching] = useState(false);
   const [countdown, setCountdown] = useState<number | null>(null);
+
 
 
   useEffect(() => {
@@ -57,8 +57,10 @@ export default function Home() {
       </div>
 
       <h1 className="home-title">
-        The Ultimate Open Source <span className="ifusion-text">Dev</span> Platform 🚀
-      </h1>
+  The Ultimate Open Source <span className="ifusion-text">Dev Utilities</span> Platform 🚀
+</h1>
+<h2>Formatters • Editors • Converters • Diff Tools</h2>
+
 
       <p className="home-subtitle">
         A unified workspace for developers — formatters, editors, converters, playgrounds, and diff tools in one blazing fast UI.

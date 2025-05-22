@@ -1,216 +1,293 @@
-import React from 'react';
-// import React, { useState, useEffect, useRef } from 'react';
-// import { CreateMLCEngine, MLCEngine } from '@mlc-ai/web-llm';
+// src/components/AiSpace.tsx
+
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { CreateMLCEngine, type MLCEngine } from '@mlc-ai/web-llm';
+import ReactMarkdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import remarkGfm from 'remark-gfm';
+
 import './AiSpace.css';
 
-// Dummy types for retrieval API responses
-// interface DocChunk { id: string; text: string; source: string; }
-// interface WebHit { snippet: string; url: string; }
+// --- Types ---
+interface DocChunk {
+  id: string;
+  text: string;
+  source: string;
+}
 
-const AiSpace: React.FC = () => {
-//   // WebLLM engine and control states
-//   const [engine, setEngine] = useState<MLCEngine | null>(null);
-//   const [engineStarted, setEngineStarted] = useState(false);
-//   const [loadingEngine, setLoadingEngine] = useState(false);
+interface WebHit {
+  snippet: string;
+  url: string;
+}
 
-//   // Mode toggles: pure chat or RAG
-//   const [useRag, setUseRag] = useState(true);
-//   const [includeWeb, setIncludeWeb] = useState(false);
+interface ChatMessage {
+  role: 'user' | 'assistant';
+  content: string;
+}
 
-//   // RAG and chat states
-//   const [query, setQuery] = useState('');
-//   const [answer, setAnswer] = useState('');
-//   const [docs, setDocs] = useState<DocChunk[]>([]);
-//   const fileInputRef = useRef<HTMLInputElement>(null);
-//   const [loadingAnswer, setLoadingAnswer] = useState(false);
+// --- Constants ---
+const CHUNK_SIZE = 1000;
+const TOP_K = 3;
 
-//   const selectedModel = 'Llama-3.1-8B-Instruct-q4f32_1-MLC';
+// --- Component ---
+export const AiSpace: React.FC = () => {
+  // Engine states
+  const [engine, setEngine] = useState<MLCEngine | null>(null);
+  const [engineStarted, setEngineStarted] = useState(false);
+  const [loadingEngine, setLoadingEngine] = useState(false);
 
-//   // Initialize WebLLM engine
-//   const initEngine = async (): Promise<MLCEngine> => {
-//     setLoadingEngine(true);
-//     const newEngine = await CreateMLCEngine(selectedModel, {
-//       initProgressCallback: (p) => console.log('Engine load:', p),
-//     });
-//     setEngine(newEngine);
-//     setLoadingEngine(false);
-//     return newEngine;
-//   };
+  // Mode toggles
+  const [useRag, setUseRag] = useState(false);
+  const [includeWeb, setIncludeWeb] = useState(false);
 
-//   // Start/Stop engine handler
-//   const handleEngineToggle = async () => {
-//     if (engineStarted) {
-//       engine?.dispose();
-//       setEngine(null);
-//       setEngineStarted(false);
-//     } else {
-//       try {
-//         await initEngine();
-//         setEngineStarted(true);
-//       } catch {
-//         alert('Failed to load AI engine. Check console for details.');
-//       }
-//     }
-//   };
+  // Data states
+  const [query, setQuery] = useState('');
+  const [docs, setDocs] = useState<DocChunk[]>([]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [loadingAnswer, setLoadingAnswer] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-//   // Upload documents handler
-//   const handleFileUpload = async () => {
-//     const files = fileInputRef.current?.files;
-//     if (!files?.length) return;
-//     const form = new FormData();
-//     Array.from(files).forEach((f) => form.append('files', f));
-//     try {
-//       await fetch('/api/upload', { method: 'POST', body: form });
-//       const resp = await fetch('/api/docs');
-//       const list: DocChunk[] = resp.ok ? await resp.json() : [];
-//       setDocs(list);
-//     } catch {
-//       alert('Upload failed or docs endpoint not available.');
-//     }
-//   };
+  // Initialize engine
+  const initEngine = useCallback(async () => {
+    setLoadingEngine(true);
+    const eng = await CreateMLCEngine('Llama-3.1-8B-Instruct-q4f32_1-MLC', {
+      initProgressCallback: (p) => console.log('Engine load:', p),
+    });
+    setEngine(eng);
+    setLoadingEngine(false);
+    return eng;
+  }, []);
 
-//   // Fetch context from RAG backend
-//   const fetchContext = async (): Promise<{ docs: DocChunk[]; webHits: WebHit[] }> => {
-//     try {
-//       const resp = await fetch('/api/rag', {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify({ query, includeWeb }),
-//       });
-//       if (!resp.ok) throw new Error(`Status ${resp.status}`);
-//       return await resp.json();
-//     } catch (err) {
-//       console.error('fetchContext error:', err);
-//       alert('Context fetch failed. Ensure /api/rag is up.');
-//       return { docs: [], webHits: [] };
-//     }
-//   };
+  const handleEngineToggle = useCallback(async () => {
+    if (engineStarted) {
+      engine?.dispose();
+      setEngine(null);
+      setEngineStarted(false);
+    } else {
+      try {
+        await initEngine();
+        setEngineStarted(true);
+      } catch (err) {
+        console.error(err);
+        alert('Failed to load AI engine.');
+      }
+    }
+  }, [engineStarted, engine, initEngine]);
 
-//   // Build prompt with context for RAG
-//   const buildRagPrompt = (q: string, docs: DocChunk[], webHits: WebHit[]) => {
-//     const parts: string[] = ['You are an expert assistant. Think step by step and cite sources.'];
-//     if (includeWeb) {
-//       parts.push('[Live Web Results]');
-//       webHits.forEach((h, i) => parts.push(`${i + 1}. "${h.snippet}" — ${h.url}`));
-//     }
-//     if (docs.length) {
-//       parts.push('[User Documents]');
-//       docs.forEach((d, i) => parts.push(`${String.fromCharCode(65 + i)}. "${d.text}" — ${d.source}`));
-//     }
-//     parts.push('[User Question]');
-//     parts.push(q);
-//     return parts.join('\n');
-//   };
+  const handleFileUpload = useCallback(async () => {
+    const files = fileInputRef.current?.files;
+    if (!files?.length) return;
 
-//   // Ask AI handler for both modes
-//   const handleAsk = async () => {
-//     if (!engineStarted || !engine) return;
-//     setLoadingAnswer(true);
-//     setAnswer('');
+    const chunks: DocChunk[] = [];
 
-//     // Determine message sequence
-//     let messages: { role: 'system' | 'user'; content: string }[] = [];
-//     if (useRag) {
-//       const { docs: ctxDocs, webHits } = await fetchContext();
-//       const prompt = buildRagPrompt(query, ctxDocs, webHits);
-//       messages = [{ role: 'system', content: prompt }];
-//     } else {
-//       messages = [
-//         { role: 'system', content: 'You are a helpful AI assistant.' },
-//         { role: 'user', content: query },
-//       ];
-//     }
+    for (const file of Array.from(files)) {
+      const text = await file.text();
+      for (let i = 0; i < text.length; i += CHUNK_SIZE) {
+        chunks.push({
+          id: `${file.name}-${i}`,
+          text: text.slice(i, i + CHUNK_SIZE),
+          source: file.name,
+        });
+      }
+    }
 
-//     try {
-//       const stream = await engine.chat.completions.create({ messages, stream: true });
-//       let text = '';
-//       for await (const chunk of stream) {
-//         text += chunk.choices[0].delta.content || '';
-//         setAnswer(text);
-//       }
-//     } catch (err) {
-//       console.error('AI generation error:', err);
-//       setAnswer('Error generating answer.');
-//     } finally {
-//       setLoadingAnswer(false);
-//     }
-//   };
+    setDocs(chunks);
+  }, []);
 
-//   // Initial docs fetch
-//   useEffect(() => {
-//     (async () => {
-//       try {
-//         const resp = await fetch('/api/docs');
-//         const list: DocChunk[] = resp.ok ? await resp.json() : [];
-//         setDocs(list);
-//       } catch {
-//         console.warn('/api/docs not available');
-//       }
-//     })();
-//   }, []);
+  const cosineSimilarity = (a: number[], b: number[]) => {
+    let dot = 0, na = 0, nb = 0;
+    for (let i = 0; i < a.length; i++) {
+      dot += a[i] * b[i];
+      na += a[i] ** 2;
+      nb += b[i] ** 2;
+    }
+    return dot / (Math.sqrt(na) * Math.sqrt(nb) + 1e-12);
+  };
+
+  const fetchContext = useCallback(async () => {
+    try {
+      const res = await fetch('/api/rag', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query, includeWeb }),
+      });
+
+      if (!res.ok) throw new Error('Fetch failed');
+
+      return await res.json() as { docs: DocChunk[]; webHits: WebHit[] };
+    } catch (error) {
+      console.error(error);
+      return { docs: [], webHits: [] };
+    }
+  }, [query, includeWeb]);
+
+  const buildRagPrompt = (q: string, docChunks: DocChunk[], webHits: WebHit[]) => {
+    const parts = ['You are an expert assistant. Cite your sources.'];
+
+    if (includeWeb && webHits.length) {
+      parts.push('[Live Web Results]');
+      webHits.forEach((hit, i) =>
+        parts.push(`${i + 1}. "${hit.snippet}" — ${hit.url}`)
+      );
+    }
+
+    if (docChunks.length) {
+      parts.push('[User Documents]');
+      docChunks.forEach((doc, i) =>
+        parts.push(`${String.fromCharCode(65 + i)}. "${doc.text}" — ${doc.source}`)
+      );
+    }
+
+    parts.push('[User Question]', q);
+    return parts.join('\n\n');
+  };
+
+ const handleAsk = useCallback(async () => {
+  if (!engineStarted || !engine || !query.trim()) return;
+
+  setLoadingAnswer(true);
+  setMessages((prev) => [...prev, { role: 'user', content: query }]);
+
+  let prompt = `You are a helpful AI assistant.\n\n[User Question]\n${query}`;
+
+  let scoredDocs: DocChunk[] = [];
+
+  if (useRag) {
+    const context = await fetchContext();
+    const combinedDocs = [...docs, ...context.docs];
+
+    if (combinedDocs.length) {
+      const [qEmb] = await engine.embed.text.embed([query]);
+      const docTexts = combinedDocs.map((doc) => doc.text);
+      const docEmbs = await engine.embed.text.embed(docTexts);
+
+      scoredDocs = combinedDocs
+        .map((doc, i) => ({
+          ...doc,
+          score: cosineSimilarity(qEmb, docEmbs[i])
+        }))
+        .sort((a, b) => b.score - a.score)
+        .slice(0, TOP_K);
+
+      prompt = buildRagPrompt(query, scoredDocs, context.webHits || []);
+    }
+  }
+
+  try {
+    const stream = await engine.chat.completions.create({
+      messages: [
+        { role: 'system', content: 'You are a helpful AI assistant. Cite your sources.' },
+        { role: 'user', content: prompt },
+      ],
+      stream: true,
+    });
+
+    let assistantText = '';
+    for await (const chunk of stream) {
+      assistantText += chunk.choices[0].delta.content || '';
+
+      setMessages((prev) => {
+        const updated = [...prev];
+        const last = updated[updated.length - 1];
+        if (last?.role === 'assistant') {
+          last.content = assistantText;
+        } else {
+          updated.push({ role: 'assistant', content: assistantText });
+        }
+        return updated;
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    setMessages((prev) => [...prev, { role: 'assistant', content: 'Error generating answer.' }]);
+  } finally {
+    setLoadingAnswer(false);
+    setQuery('');
+  }
+}, [engine, engineStarted, query, useRag, docs, fetchContext]);
+
+
+  useEffect(() => {
+    return () => engine?.dispose();
+  }, [engine]);
 
   return (
-    <h1>We are building our AI Space</h1>
-    // <div className="ai-space-container">
-    //   <h2>iFusionOne AI Assistant</h2>
-    //   {/* Engine controls */}
-    //   <button onClick={handleEngineToggle} disabled={loadingEngine}>
-    //     {engineStarted ? 'Stop AI Engine' : loadingEngine ? 'Loading Engine...' : 'Start AI Engine'}
-    //   </button>
+    <div className="ai-space-container" data-theme="light">
+      <header className="ai-space-header">
+        <h2>iFusionOne AI Space</h2>
+      </header>
 
-    //   {/* Chat mode toggle */}
-    //   <div className="mode-toggle">
-    //     <label>
-    //       <input type="radio" name="mode" checked={!useRag} onChange={() => setUseRag(false)} /> Pure Chat
-    //     </label>
-    //     <label>
-    //       <input type="radio" name="mode" checked={useRag} onChange={() => setUseRag(true)} /> RAG
-    //     </label>
-    //   </div>
+      <div className="chat-window">
+        {messages.map((msg, index) => (
+          <div key={index} className={`message ${msg.role}`}>
+            {msg.role === 'assistant' && <img src="/fuso-superhero-logo.png" className="avatar" />}
+            <div className="bubble">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  code({ node, inline, className, children, ...props }) {
+                    const match = /language-(\w+)/.exec(className || '');
+                    return !inline && match ? (
+                      <SyntaxHighlighter
+                        style={oneDark}
+                        language={match[1]}
+                        PreTag="div"
+                        {...props}
+                      >
+                        {String(children).replace(/\n$/, '')}
+                      </SyntaxHighlighter>
+                    ) : (
+                      <code className={className} {...props}>{children}</code>
+                    );
+                  },
+                }}
+              >
+                {msg.content}
+              </ReactMarkdown>
+            </div>
+          </div>
+        ))}
+      </div>
 
-    //   {/* Upload & web toggle (only when useRag) */}
-    //   {useRag && (
-    //     <div className="controls">
-    //       <div className="upload">
-    //         <input type="file" ref={fileInputRef} multiple accept=".pdf,.txt,.md" />
-    //         <button onClick={handleFileUpload}>Upload Docs</button>
-    //       </div>
-    //       <label>
-    //         <input type="checkbox" checked={includeWeb} onChange={() => setIncludeWeb((v) => !v)} />
-    //         Search the Internet
-    //       </label>
-    //     </div>
-    //   )}
+      <div className="controls">
+        <input
+          type="file"
+          ref={fileInputRef}
+          multiple
+          accept=".pdf,.txt,.md"
+          onChange={handleFileUpload}
+        />
+        <button onClick={handleEngineToggle} disabled={loadingEngine}>
+          {engineStarted ? 'Stop Engine' : loadingEngine ? 'Loading...' : 'Start Engine'}
+        </button>
+        <label>
+          <input type="checkbox" checked={useRag} onChange={() => setUseRag(v => !v)} />
+          Use RAG
+        </label>
+        <label>
+          <input type="checkbox" checked={includeWeb} onChange={() => setIncludeWeb(v => !v)} />
+          Include Web
+        </label>
+      </div>
 
-    //   {/* Query input */}
-    //   <textarea
-    //     rows={4}
-    //     placeholder="Enter your question..."
-    //     value={query}
-    //     onChange={(e) => setQuery(e.target.value)}
-    //     disabled={!engineStarted || loadingAnswer}
-    //   />
-    //   <button onClick={handleAsk} disabled={!query || !engineStarted || loadingAnswer}>
-    //     {loadingAnswer ? 'Thinking...' : 'Ask AI'}
-    //   </button>
-
-    //   {/* Answer display */}
-    //   <pre className="ai-answer">{answer}</pre>
-
-    //   {/* Document list (only RAG mode) */}
-    //   {useRag && (
-    //     <div className="doc-list">
-    //       <h3>Uploaded Documents:</h3>
-    //       <ul>
-    //         {docs.map((d) => (
-    //           <li key={d.id}>{d.source}</li>
-    //         ))}
-    //       </ul>
-    //     </div>
-    //   )}
-    // </div>
+      <form className="chat-input" onSubmit={(e) => { e.preventDefault(); handleAsk(); }}>
+        <textarea
+          rows={2}
+          placeholder="Type your message…"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          disabled={!engineStarted || loadingAnswer}
+        />
+        <button type="submit" disabled={!query.trim() || !engineStarted || loadingAnswer}>
+          {loadingAnswer ? 'Thinking…' : 'Send'}
+        </button>
+      </form>
+    </div>
   );
 };
+
+
 
 export default {
   name: 'Ai Space',

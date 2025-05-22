@@ -1,0 +1,27 @@
+.onwork-page {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: var(--bg);
+    color: white;
+    text-align: center;
+    text-align: center;
+    padding: 1rem;
+}
+
+.onwork-image {
+    position: relative;
+    height: 55vh;
+    width: auto;
+    animation: float 4s ease-in-out infinite;
+    filter: drop-shadow(0px 5px 8px rgba(0, 0, 0, 0.2));
+    z-index: 1;
+}
+
+.onwork-title,.onwork-description{
+    color: var(--text);
+}

@@ -6,6 +6,7 @@ import FusoStoryPage from './pages/FusoStoryPage'
 import Home from './pages/Home'
 import Error from './pages/Error'
 import { Analytics } from '@vercel/analytics/react';
+import Settings from './pages/Settings'
 
 // Define Plugin type
 interface Plugin {
@@ -117,6 +118,8 @@ useEffect(() => {
       <Routes>
         {/* Static route */}
         <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="/error" element={<Error />} />
         <Route path="/fuso-story" element={<FusoStoryPage />} />
         

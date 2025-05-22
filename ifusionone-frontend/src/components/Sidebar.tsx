@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState, useMemo, useEffect } from "react";
-import { FiSun, FiMoon, FiSearch, FiSettings } from "react-icons/fi";
+import { FiSearch, FiSettings } from "react-icons/fi";
+import {Sun, Moon} from "lucide-react"
 import { GoSidebarCollapse } from "react-icons/go";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import "../styles/Sidebar.css";
@@ -96,7 +97,7 @@ export default function Sidebar({ isCollapsed, collapseSidebar }: SideBarProps) 
           </h2>
           <div className="control-btns">
             <button onClick={toggleTheme} title="Toggle Theme" className="theme-toggle-btn">
-              {theme === "dark" ? <FiSun /> : <FiMoon />}
+              {theme === "dark" ? <Sun /> : <Moon />}
             </button>
             <button onClick={collapseSidebar} title="Collapse Sidebar" className="theme-toggle-btn">
               <GoSidebarCollapse />

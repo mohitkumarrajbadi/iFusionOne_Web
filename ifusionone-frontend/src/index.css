@@ -1,6 +1,13 @@
 @font-face {
   font-family: 'JetBrains Mono';
-  src: url('./fonts/ttf/JetBrainsMono-Regular.ttf') format('truetype');
+  src: url('./assets/fonts/JetBrainsMono-2.304/fonts/ttf/JetBrainsMono-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Rubrik';
+  src: url('./assets/fonts/Rubik/static/Rubik-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }

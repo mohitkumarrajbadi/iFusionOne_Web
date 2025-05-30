@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { CreateMLCEngine, type MLCEngine } from '@mlc-ai/web-llm';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
 
 import './AiSpace.css';
@@ -61,7 +60,6 @@ export const AiSpace: React.FC = () => {
 
   const handleEngineToggle = useCallback(async () => {
     if (engineStarted) {
-      engine?.dispose();
       setEngine(null);
       setEngineStarted(false);
     } else {
@@ -158,9 +156,25 @@ export const AiSpace: React.FC = () => {
     const combinedDocs = [...docs, ...context.docs];
 
     if (combinedDocs.length) {
-      const [qEmb] = await engine.embed.text.embed([query]);
+      const qEmbResp = await engine.embeddings.create({ input: query });
+      // Extract the embedding vector as number[]
+      const qEmb: number[] =
+        Array.isArray(qEmbResp)
+          ? (qEmbResp as number[])
+          : Array.isArray(qEmbResp.data)
+            ? (qEmbResp.data as unknown as number[])
+            : [];
+
       const docTexts = combinedDocs.map((doc) => doc.text);
-      const docEmbs = await engine.embed.text.embed(docTexts);
+      const docEmbsResp = await Promise.all(docTexts.map(text => engine.embeddings.create({ input: text })));
+      // Extract each embedding vector as number[]
+      const docEmbs: number[][] = docEmbsResp.map(resp =>
+        Array.isArray(resp)
+          ? (resp as number[])
+          : Array.isArray(resp.data)
+            ? (resp.data as unknown as number[])
+            : []
+      );
 
       scoredDocs = combinedDocs
         .map((doc, i) => ({
@@ -207,11 +221,9 @@ export const AiSpace: React.FC = () => {
   }
 }, [engine, engineStarted, query, useRag, docs, fetchContext]);
 
-
   useEffect(() => {
-    return () => engine?.dispose();
+    return () => {};
   }, [engine]);
-
   return (
     <div className="ai-space-container" data-theme="light">
       <header className="ai-space-header">
@@ -226,14 +238,15 @@ export const AiSpace: React.FC = () => {
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
-                  code({ node, inline, className, children, ...props }) {
+                  code({ node, className, children, ...props }) {
                     const match = /language-(\w+)/.exec(className || '');
-                    return !inline && match ? (
+                    const isInline = (props as any).inline;
+                    return !isInline && match ? (
                       <SyntaxHighlighter
-                        style={oneDark}
-                        language={match[1]}
-                        PreTag="div"
-                        {...props}
+                        // style={oneDark}
+                        // language={match[1]}
+                        // PreTag="div"
+                        // {...props}
                       >
                         {String(children).replace(/\n$/, '')}
                       </SyntaxHighlighter>

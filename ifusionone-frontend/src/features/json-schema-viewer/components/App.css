@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+.json-node {
+  font-family: "rubik";
+  /* border: 1px solid #ebebeb; */
+  
+box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  max-width: 300px;
+  cursor: default;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 6px;
+}
+
+.json-property {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 6px 12px;
+  word-break: break-all;
+  
+  
+}
+
+.json-property:not(:last-child) {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  
+}
+
+.json-property-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  ;
+}
+
+.property-name  {
+  font-weight: 500;
+  color: #262626;
+  font-size: 14px;
+
+}
+
+.property-type {
+  color: #5c5c5c;
+  /* font-style: italic; */
+  font-size: 14px;
+}
+
+.property-value {
+  color: #262626;
+ 
+}

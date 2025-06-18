@@ -32,6 +32,7 @@ const JsonNode = ({ data, id }: NodeProps<JsonNode>) => {
           )}
         </div>
       ))}
+      {data.objProperties.length === 0 && <div className="json-empty">No properties</div>}
     </div>
   );
 };
